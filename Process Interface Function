@@ -1,0 +1,58 @@
+local NumberData = require(...); -- NumberData
+
+local function format(number:number, models, overflow:boolean)
+	
+	assert(number, "No number provided");
+	assert(models, "Model(s) not provided");
+
+	local numberString = tostring(number);
+	
+	if overflow and #numberString > #models then
+		
+		-- Overflow detected.
+		
+		for index, clockModel in models do
+			
+			for i = 1, 7 do
+
+				local part = clockModel:FindFirstChild(tostring(i));
+				local numberData = NumberData[9][i]
+
+				if part then
+					part.Transparency = numberData == 1 and 0 or 1
+				end
+
+			end
+			
+		end
+		
+	else
+		
+		-- Normal operation.
+		
+		for index = 1, #numberString do
+
+			local stringCharacter = tonumber(numberString:sub(index, index));
+			local clockModel = models[index];
+
+			if clockModel then
+
+				for i = 1, 7 do
+
+					local part = clockModel:FindFirstChild(tostring(i));
+					local numberData = NumberData[stringCharacter][i]
+
+					if part then
+						part.Transparency = numberData == 1 and 0 or 1
+					end
+
+				end
+
+			end
+
+		end
+		
+	end
+	
+
+end
