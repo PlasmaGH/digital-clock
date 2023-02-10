@@ -1,18 +1,18 @@
 local NumberData = require(...); -- NumberData
 
 local function format(number:number, models, overflow:boolean)
-	
+
 	assert(number, "No number provided");
 	assert(models, "Model(s) not provided");
 
 	local numberString = tostring(number);
-	
+
 	if overflow and #numberString > #models then
-		
+
 		-- Overflow detected.
-		
+
 		for index, clockModel in models do
-			
+
 			for i = 1, 7 do
 
 				local part = clockModel:FindFirstChild(tostring(i));
@@ -23,12 +23,14 @@ local function format(number:number, models, overflow:boolean)
 				end
 
 			end
-			
+
 		end
-		
+
 	else
-		
+
 		-- Normal operation.
+		
+		local updatedClocks = {};
 		
 		for index = 1, #numberString do
 
@@ -36,7 +38,9 @@ local function format(number:number, models, overflow:boolean)
 			local clockModel = models[index];
 
 			if clockModel then
-
+				
+				table.insert(updatedClocks, clockModel);
+				
 				for i = 1, 7 do
 
 					local part = clockModel:FindFirstChild(tostring(i));
@@ -52,7 +56,26 @@ local function format(number:number, models, overflow:boolean)
 
 		end
 		
+		-- Update the rest of the clocks to 0 if not updated.
+		
+		for index, clockModel in models do
+			if not table.find(updatedClocks, clockModel) then
+				
+				for i = 1, 7 do
+
+					local part = clockModel:FindFirstChild(tostring(i));
+					local numberData = NumberData[0][i]
+
+					if part then
+						part.Transparency = numberData == 1 and 0 or 1
+					end
+
+				end
+				
+			end
+		end
+		
 	end
-	
+
 
 end
