@@ -12,6 +12,7 @@ Compiles parts to create a digital clock interface.
 [3] : boolean "Overflow clock" - If this is enabled, if there are more numbers than clocks all clocks will go to "9".
 
 format(52, {script.Parent.Clock_1, script.Parent.Clock_2,}, true);
+-- ^ The expected result is for the clock to display 52
 
 ```
 > Created for rifle digital ammo counter
