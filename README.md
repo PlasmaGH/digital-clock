@@ -3,7 +3,7 @@ Compiles parts to create a digital clock interface.
 
 ---
 
-## Useage:
+## Usage:
 
 ```
 
